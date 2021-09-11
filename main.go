@@ -24,7 +24,8 @@ func DaoQueryRow(db *sql.DB) (*User, error) {
 	err := row.Scan(&user.id, &user.name)
 	if errors.Is(err, sql.ErrNoRows) {
 		return nil, nil
-	} else if err != nil {
+	} 
+        if err != nil {
 		return nil, errors.Wrap(err, "data not found")
 	}
 	return user, nil
