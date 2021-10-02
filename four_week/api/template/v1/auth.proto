@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package template.api.v1;
+
+option go_package = "template/service/v1;v1";
+option java_multiple_files = true;
+option java_package = "template.service.v1";
+
+import "google/api/annotations.proto";
+// the validate rules:
+// https://github.com/envoyproxy/protoc-gen-validate
+import "validate/validate.proto";
+
+service UserService {
+  rpc GetById (GetUserRequest) returns (GetUserReply) {
+         option(google.api.http) = {
+           get: "/service/v1/user/{id}"
+         };
+      }
+}
+
+message GetUserRequest {
+  int64 id = 1 [(validate.rules).string = {min_len: 5, max_len: 50}];
+}
+
+message GetUserReply {
+  int64 id = 1;
+  string name = 2;
+  string email = 3;
+}
